@@ -1,6 +1,9 @@
 # your code goes here
 class Person
 
+  attr_reader :name, :happiness, :hygiene
+  attr_accessor :bank_account
+
   def initialize(name)
     @name = name
     @happiness = 8
@@ -8,18 +11,19 @@ class Person
     @bank_account = 25
   end
 
-  attr_reader :name, :happiness, :hygiene
-  attr_accessor :bank_account
-
-  def happiness=(0..10)
-    @happiness = (0..10)
+  def happiness=(num)
+    @happiness = num
+    @happiness = 10 if @happiness > 10
+    @happiness = 0 if @happiness < 0
   end
 
-  def hygiene=(0..10)
-    @hygiene = (0..10)
+  def hygiene=(num)
+    @hygiene = num
+    @hygiene = 10 if @hygiene > 10
+    @hygiene = 0 if @hygiene < 0
   end
 
-  def clean?(hygiene)
+  def clean?
     if hygiene > 7
       true
     else
@@ -27,7 +31,7 @@ class Person
     end
   end
 
-  def happy?(happiness)
+  def happy?
     if happiness > 7
       true
     else
@@ -35,38 +39,40 @@ class Person
     end
   end
 
-  def get_paid(bank_account, salary)
-    bank_account += salary
+  def get_paid(salary)
+    self.bank_account += salary
     return "all about the benjamins"
   end
 
-  def take_bath(hygiene)
-    hygiene += 4
+  def take_bath
+    self.hygiene += 4
     return "♪ Rub-a-dub just relaxing in the tub ♫"
   end
 
 
-  def work_out(hygiene, happiness)
-    hygiene -= 3
-    happiness += 2
+  def work_out
+    self.hygiene -= 3
+    self.happiness += 2
     return "♪ another one bites the dust ♫"
 
   end
 
-  def call_friend(friend, happiness)
-    happiness += 3
+  def call_friend(friend)
+    self.happiness += 3
+    friend.happiness += 3
 
-    if friend == "Felix"
-      return "Hi Felix! It's Stella. How are you?"
-    end
+    return "Hi #{friend.name}! It's #{self.name}. How are you?"
+
   end
 
   def start_conversation(friend, topic)
     if topic == "politics"
-      #both get sadder
+      self.happiness -= 2
+      friend.happiness -= 2
       return "blah blah partisan blah lobbyist"
     elsif topic == "weather"
-      #both get lil happier
+      self.happiness += 1
+      friend.happiness += 1
       return "blah blah sun blah rain"
     else
       return "blah blah blah blah blah"
